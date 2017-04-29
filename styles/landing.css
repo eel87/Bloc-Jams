@@ -31,9 +31,9 @@ body.landing {
 }
 
 .point {
-  position: relative;
-  padding: 2rem;
-  text-align: center;
+    position: relative;
+    padding: 2rem;
+    text-align: center;
 }
 
 .point .point-title {
