@@ -63,17 +63,12 @@ body {
   max-width: 64rem;
 }
 
-<<<<<<< HEAD
 .container .narrow {
   max-width: 56rem;
 }
-
 /* medium and small screens (640px) */
-=======
->>>>>>> 9feef8df44ff648f5b6d6c0f26ef02c89b7d6ff4
 @media (min-width: 640px) {
   html { font-size: 112%; }
-}
 
   .column {
     float: left;
@@ -85,23 +80,20 @@ body {
   .column.two-thirds { width: 66.7%; }
   .column.half { width: 50%; }
   .column.third { width: 33.3%; }
-<<<<<<< HEAD
   .column.fourth  { width: 25%; }
-=======
-  .column.fourth { width: 25%; }
->>>>>>> 9feef8df44ff648f5b6d6c0f26ef02c89b7d6ff4
   .column.flow-opposite { float: right; }
+}
 
-  @media (min-width: 1024px) {
-    html { font-size: 120%; }
+@media (min-width: 1024px) {
+  html { font-size: 120%; }
+}
+
+.clearfix::before,
+.clearfix::after {
+    content: " ";
+    display: table;
+}
+
+.clearfix::after {
+    clear: both;
   }
-
-  .clearfix::before,
-  .clearfix::after {
-      content: " ";
-      display: table;
-  }
-
-  .clearfix::after {
-      clear: both;
-    }
