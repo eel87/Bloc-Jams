@@ -28,6 +28,21 @@ var albumMarconi = {
   ]
 };
 
+var albumRhoda = {
+  title: 'Rescued and Rabid',
+  artist: 'Rhoda the Rapper feat. DJ Monte',
+  label: 'CandE',
+  year: '2016',
+  albumArtUrl: 'assets/images/album_covers/RhodatheRapper.jpg',
+  songs: [
+    { title: 'Back up off my carrot', duration: '16:53' },
+    { title: "Daisy's in a daze", duration: '2:16' },
+    { title: 'How I got my way (the hard way)', duration: '5:43' },
+    { title: "Monte's made of money (and he knows it)", duration: '7:33' },
+    { title: "I'm still Rhoda from the farm", duration: '3:50' }
+  ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
   var template =
     '<tr class="album-view-song-item">'
@@ -46,10 +61,11 @@ var setCurrentAlbum = function(album) {
   var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
   var albumImage = document.getElementsByClassName('album-cover-art')[0];
   var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+  albumImage.setAttribute('src', album.albumArtUrl);
   albumTitle.firstChild.nodeValue = album.title;
   albumArtist.firstChild.nodeValue = album.artist;
   albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
-  albumImage.setAttribute('src', album.albumArtUrl);
+
   albumSongList.innerHTML = '';
     for (var i = 0; i < album.songs.length; i++) {
       albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
@@ -58,4 +74,15 @@ var setCurrentAlbum = function(album) {
 
 window.onload = function() {
   setCurrentAlbum(albumPicasso);
+
+  var albumImage = document.getElementsByClassName('album-cover-art')[0];
+  var albumNames = [albumPicasso, albumMarconi, albumRhoda];
+  var i = 0;
+  albumImage.addEventListener('click', function(event) {
+    i++;
+      if (i >= albumNames.length) {
+        i = 0;
+      }
+        setCurrentAlbum(albumNames[i]);
+  });
 };

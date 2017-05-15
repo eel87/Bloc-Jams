@@ -18,7 +18,7 @@ var collectionItemTemplate =
     var collectionContainer = document.getElementsByClassName('album-covers')[0];
     collectionContainer.innerHTML = '';
 
-    for (var i = 0; i < 12; i++){
+    for (var i = 0; i < 3; i++){
       collectionContainer.innerHTML += collectionItemTemplate;
     }
   }
