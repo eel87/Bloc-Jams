@@ -123,14 +123,6 @@ songListContainer.addEventListener('mouseover', function(event) {
     }
 });
 
-//  songListContainer.addEventListener('mouseover', function(event) {
-  //  var songItem = getSongItem(event.target);
-    //var songItemNumber = songItem.getAttribute('data-song-number');
-      // if (songItemNumber !== currentlyPlayingSong) {
-        // songItem.innerHTML = playButtonTemplate;
-       //}
-  //});
-
   for (var i = 0; i < songRows.length; i++) {
     songRows[i].addEventListener('mouseleave', function(event) {
       var songItem = getSongItem(event.target);
