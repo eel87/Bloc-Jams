@@ -57,13 +57,19 @@ var setCurrentAlbum = function(album) {
 };
 
 var findParentByClassName = function(element, targetClass) {
-    if (element) {
-        var currentParent = element.parentElement;
-        while (currentParent.className !== targetClass && currentParent.className !== null) {
-            currentParent = currentParent.parentElement;
-        }
+  if (element.parentElement == null) {
+    console.log("No parent found");
+  }
+  if (element.parentElement !== targetClass) {
+    console.log("No parent found with that class name");
+  }
+  if (element) {
+    var currentParent = element.parentElement;
+      while (currentParent.className !== targetClass && currentParent.className !== null) {
+        currentParent = currentParent.parentElement;
+      }
         return currentParent;
-    }
+  }
 };
 
 var getSongItem = function(element) {
@@ -113,15 +119,14 @@ var currentlyPlayingSong = null;
 window.onload = function() {
   setCurrentAlbum(albumPicasso);
 
-songListContainer.addEventListener('mouseover', function(event) {
+  songListContainer.addEventListener('mouseover', function(event) {
     if (event.target.parentElement.className === 'album-view-song-item') {
       var songItem = getSongItem(event.target);
-
-      if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
-      songItem.innerHTML = playButtonTemplate;
-      }
+        if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
+                  songItem.innerHTML = playButtonTemplate;
+        }
     }
-});
+  });
 
   for (var i = 0; i < songRows.length; i++) {
     songRows[i].addEventListener('mouseleave', function(event) {
