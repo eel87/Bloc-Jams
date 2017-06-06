@@ -2,14 +2,21 @@ var setSong = function(songNumber) {
   if (currentSoundFile) {
     currentSoundFile.stop();
   }
+
   currentlyPlayingSongNumber = parseInt(songNumber);
   currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
   currentSoundFile = new buzz.sound(currentSongFromAlbum.audioURL, {
     formats: ['mp3'],
     preload: true
   });
-
+  seek(time);
   setVolume(currentVolume);
+};
+
+var seek = function(time) {
+  if (currentSoundFile) {
+    currentSoundFile.setTime(time);
+  }
 };
 
 var setVolume = function(volume) {
@@ -40,10 +47,10 @@ var createSongRow = function(songNumber, songName, songLength) {
       currentlyPlayingCell.html(currentlyPlayingSongNumber);
     }
 	  if (currentlyPlayingSongNumber !== songNumber) {
-		  $(this).html(pauseButtonTemplate);
-	    setSong(songNumber);
-      $('.main-controls .play-pause').html(playerBarPauseButton);
+      setSong(songNumber);
       currentSoundFile.play();
+		  $(this).html(pauseButtonTemplate);
+      $('.main-controls .play-pause').html(playerBarPauseButton);
     }
     else if (currentlyPlayingSongNumber === songNumber) {
        if (currentSoundFile.isPaused()) {
@@ -101,6 +108,17 @@ var setCurrentAlbum = function(album) {
     }
 };
 
+var updateSeekBarWhileSongPlays = function() {
+  if (currentSoundFile) {
+      currentSoundFile.bind('timeupdate', function(event) {
+        var seekBarFillRatio = this.getTime() / this.getDuration();
+        var $seekBar = $('.seek-control .seek-bar');
+
+        updateSeekPercentage($seekBar, seekBarFillRatio);
+      });
+  }
+};
+
 var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
   var offsetXPercent = seekBarFillRatio * 100;
   offsetXPercent = Math.max(0, offsetXPercent);
@@ -130,6 +148,7 @@ var setupSeekBars = function() {
 
       updateSeekPercentage($seekBar, seekBarFillRatio);
     });
+
     $(document).bind('mouseup.thumb', function() {
       $(document).unbind('mousemove.thumb');
       $(document).unbind('mouseup.thumb');
@@ -149,6 +168,7 @@ var trackIndex = function(album, song) {
 };
 
 var nextSong = function() {
+
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     currentSongIndex++;
 
@@ -160,6 +180,7 @@ var nextSong = function() {
 
     setSong(currentSongIndex + 1);
     currentSoundFile.play();
+    updateSeekBarWhileSongPlays();
 
     updatePlayerBarSong();
 
@@ -182,6 +203,7 @@ var previousSong = function() {
 
       setSong(currentSongIndex + 1);
       currentSoundFile.play();
+      updateSeekBarWhileSongPlays();
 
       updatePlayerBarSong();
 
