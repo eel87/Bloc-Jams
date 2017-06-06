@@ -9,7 +9,7 @@ var setSong = function(songNumber) {
     formats: ['mp3'],
     preload: true
   });
-  seek(time);
+
   setVolume(currentVolume);
 };
 
@@ -47,16 +47,18 @@ var createSongRow = function(songNumber, songName, songLength) {
       currentlyPlayingCell.html(currentlyPlayingSongNumber);
     }
 	  if (currentlyPlayingSongNumber !== songNumber) {
-      setSong(songNumber);
-      currentSoundFile.play();
 		  $(this).html(pauseButtonTemplate);
       $('.main-controls .play-pause').html(playerBarPauseButton);
+      setSong(songNumber);
+      currentSoundFile.play();
+      updateSeekBarWhileSongPlays();
     }
     else if (currentlyPlayingSongNumber === songNumber) {
        if (currentSoundFile.isPaused()) {
          $(this).html(pauseButtonTemplate);
-         currentSoundFile.play();
          $('.main-controls .play-pause').html(playerBarPauseButton);
+         currentSoundFile.play();
+         updateSeekBarWhileSongPlays();
        } else {
          $(this).html(playButtonTemplate);
          $('.main-controls .play-pause').html(playerBarPlayButton);
