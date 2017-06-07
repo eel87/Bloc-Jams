@@ -47,11 +47,18 @@ var createSongRow = function(songNumber, songName, songLength) {
       currentlyPlayingCell.html(currentlyPlayingSongNumber);
     }
 	  if (currentlyPlayingSongNumber !== songNumber) {
-		  $(this).html(pauseButtonTemplate);
-      $('.main-controls .play-pause').html(playerBarPauseButton);
       setSong(songNumber);
       currentSoundFile.play();
       updateSeekBarWhileSongPlays();
+      currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+
+      var $volumeFill = $('.volume .fill');
+      var $volumeThumb = $('.volume .thumb');
+      $volumeFill.width(currentVolume + '%');
+      $volumeThumb.css({left: currentVolume + '%'});
+
+      $(this).html(pauseButtonTemplate);
+      $('.main-controls .play-pause').html(playerBarPauseButton);
     }
     else if (currentlyPlayingSongNumber === songNumber) {
        if (currentSoundFile.isPaused()) {
