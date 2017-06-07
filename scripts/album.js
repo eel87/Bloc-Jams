@@ -96,7 +96,6 @@ var createSongRow = function(songNumber, songName, songLength) {
     $row.find('.song-item-number').click(clickHandler);
     $row.find('.song-item-number').click(updatePlayerBarSong);
     $row.hover(onHover, offHover);
-    $row.find('.song-item-duration');
     return $row;
 };
 
@@ -128,11 +127,11 @@ var updateSeekBarWhileSongPlays = function() {
         var currentTime = currentSoundFile.getTime();
         var totalTime = currentSoundFile.getDuration();
 
+        filterTimeCode(currentTime);
+        filterTimeCode(totalTime);
         updateSeekPercentage($seekBar, seekBarFillRatio);
         setCurrentTimeInPlayerBar();
         setTotalTimeInPlayerBar();
-        filterTimeCode(currentTime);
-        filterTimeCode(totalTime);
 
       });
   }
@@ -204,8 +203,8 @@ var setTotalTimeInPlayerBar = function(totalTime) {
 var filterTimeCode = function(timeInSeconds) {
   if (currentSoundFile) {
     timeInSeconds = parseFloat(timeInSeconds);
-    var wholeSeconds = (Math.floor(timeInSeconds % 60));
-    var wholeMinutes = (Math.floor(timeInSeconds / 60));
+    var wholeSeconds = (Math.floor(timeInSeconds%60));
+    var wholeMinutes = (Math.floor(timeInSeconds/60));
   }
     return (wholeMinutes + ":" + wholeSeconds);
 };
